@@ -4,7 +4,7 @@ extern void outb(unsigned short port, unsigned char value);
 extern unsigned char inb(unsigned short port);
 extern void COURRMOV();
 extern void interrupt_handler_0(); 
-// extern void printf(const char* format, ...); fk printf we r going gui
+extern void printf(const char* format, ...);
 void remapPIC() {
     // Start initialization
     outb(0x20, 0x11);
@@ -65,8 +65,6 @@ void IDTLOAD() {
     set_idt_gate(33, addr);
     set_idt_gate(14, addr);
     set_idt_gate(13, addr);
-    set_idt_gate(44, addr);
-
 
     // Setup the 10-byte pointer for 64-bit lidt
     idt_ptr_struct.limit = (sizeof(struct idt_entry_64) * 256) - 1;
@@ -76,8 +74,8 @@ void IDTLOAD() {
     __asm__ __volatile__("lidt %0" :: "m"(idt_ptr_struct));
 }
 
-void idt_handler_c(uint64_t intnum)
- {
+void idt_handler_c(uint64_t intnum) {
+     asm volatile("sti");
     if (intnum == 44) {
         COURRMOV();
     }
@@ -87,5 +85,4 @@ void idt_handler_c(uint64_t intnum)
     }
     outb(0x20, 0x20); // Master PIC
 
- asm volatile("sti");
  }

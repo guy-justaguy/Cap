@@ -1,12 +1,26 @@
-[bits 32]
-extern idt_handler_c  ; This is the function you'll write in C
+[bits 64]
+extern idt_handler_c 
 
 global idt_common_stub
 idt_common_stub:
-    pusha             ; Save all registers (eax, ecx, etc.)
-    call idt_handler_c ; Jump to your C logic
-    popa              ; Restore registers
-    iret              ; Interrupt Return (CRITICAL to stop triple faults)
+    call idt_handler_c ; Jump to C logic
+    push rax
+push rcx
+push rdx
+push rbx
+push rbp
+push rsi
+push rdi
+push r8
+push r9
+push r10
+push r11
+push r12
+push r13
+push r14
+push r15
+
+    iretq              ; Interrupt Return
 
 global interrupt_handler_0
 interrupt_handler_0:
