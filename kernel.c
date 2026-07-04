@@ -7,15 +7,17 @@ extern void EXECUTECOMMAND();
 extern void HYDRMEM();
 extern void IDTLOAD();
 extern void initmouse();
+extern void main();
 // extern void SYSPE();
 
 void GLDMAIN() {
 IDTLOAD();
     LINUZSYS();
-        HYDRMEM();
-            initmouse();
-          COURRMOV();
-            FORRGPBSC();
+        // HYDRMEM();
+          //  initmouse();
+         // COURRMOV();
+         // FORRGPBSC();
+                main();
                 // EXECUTECOMMAND();
                     // SYSPE();
                         // SHLLHANDL();

@@ -1,32 +1,20 @@
 #include <stdint.h>
+extern void saveallreg;
 
-extern void processfork();
-uint64_t syscall(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, ...);
-uint64_t LINUZSYS()
-{
-    if (syscall == 0)
-    {
+long sys_exit(long code);
+uint64_t syscall_table[] = {
+    [60] = sys_exit
+};
+typedef struct {
+    uint64_t rax, rcx, rdx, rbx, rbp, 
+    rsi, rdi, r8, 
+    r9, r10,
+    r11, r12,
+    r13, r14, r15;
+} reg_t;
 
-    //filediscriptopen() coming soon!
-
-    if (syscall == 1)
-    {
-        //filediscriptclose() coming soon!
-    }
-     if (syscall == 2)
-    { 
-        //filediscriptread coming soon!
-    }
-     if (syscall == 3)
-    {
-        //filediscriptwrite() coming soon!
-    }
-    if (syscall == 57)
-    {
-        processfork();
-
-
-
-    }   
-}
+void syscallhndlr(reg_t *regs)  {
+if (regs->rax == 60) {
+        sys_exit(regs->rdi);
+        }
 }
