@@ -1,7 +1,7 @@
 [bits 64]
-extern idt_handler_c 
-global idt_common_stub
-idt_common_stub:
+extern idt_handlertype2_c
+global idt_common_stubtype2
+idt_common_stubtype2:
     push rax
     push rcx
     push rdx
@@ -19,7 +19,7 @@ idt_common_stub:
     push r15
     mov rdi, rsp           ; 
     cld                    
-    call idt_handler_c 
+    call idt_handlertype2_c
     pop r15
     pop r14
     pop r13

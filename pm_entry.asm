@@ -1,7 +1,8 @@
 bits 64
 
-global _start
+global _start2
 extern GLDMAIN
+extern GDTLOAD
 extern LINUZSYS
 ; Force the section to be allocatable and executable
 section .multiboot_header alloc exec write
@@ -31,7 +32,7 @@ header_start:
     dd 8    ; size
 header_end:
 section .text
-_start:
+_start2:
     cli
     ; Force the stack to a known good location in our BSS 
     mov rax, stack_top
@@ -72,6 +73,7 @@ or ax, (3 << 9)     ; Set OSFXSR (bit 9) and OSXMMEXCPT (bit 10)
 mov cr4, rax
 
     ; 5. Drop into C
+    call GDTLOAD
     call GLDMAIN
 
 .hang:

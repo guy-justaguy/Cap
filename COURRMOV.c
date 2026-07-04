@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 extern void outb(unsigned short port, unsigned char value);
-extern unsigned char inb(unsigned short port);
+extern unsigned char inl(uint16_t port);
 uint8_t flags;
 uint8_t delta_x;
 uint8_t delta_y;
@@ -28,16 +28,16 @@ void initmouse() {
 outb (0xA8, 0x64);
 outb (0xD4, 0x64);
 outb (0xf8, 0x60);
-flags = inb(0x60);
+flags = inl(0x60);
 }
 void delta_xyinfofetcher() {
-   status = inb(0x64);
+   status = inl(0x64);
 if(status & 0x1) {
-delta_x = inb(0x60);
+delta_x = inl(0x60);
 }
-status2 = inb(0x64);
+status2 = inl(0x64);
 if(status2 & 0x1) {
-delta_y = inb(0x60);
+delta_y = inl(0x60);
 }
 }
 static uint32_t real_x = 0;
@@ -51,10 +51,4 @@ savepos = realcourr;
 void COURRMOV() {
     delta_xyinfofetcher();
  calc();   
-/* --start-- */
-mouse_xy = delta_x + delta_y; // calculate the mouse movement
-__builtin_memcpy(framebuffer + savepos, cursorwhite, 4096);
-
-/* --end-- */
-// holy shit fking 60 lines for a mouse😭😭😭💀
 }

@@ -1,7 +1,7 @@
 [bits 64]
-extern idt_handler_c 
-global idt_common_stub
-idt_common_stub:
+extern syscall_hndlr
+global saveallreg
+saveallerg:
     push rax
     push rcx
     push rdx
@@ -19,7 +19,7 @@ idt_common_stub:
     push r15
     mov rdi, rsp           ; 
     cld                    
-    call idt_handler_c 
+    call syscall_hndlr
     pop r15
     pop r14
     pop r13
