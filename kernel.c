@@ -9,6 +9,7 @@ extern void IDTLOAD();
 extern void initmouse();
 extern void main();
 // extern void SYSPE();
+extern void virtio_main();
 
 void GLDMAIN() {
 IDTLOAD();
